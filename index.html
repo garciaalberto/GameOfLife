@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Randomized Conway's Game of Life</title>
+</head>
+<body>
+<script>
+    function randomize_binary() {
+        return Math.round(Math.random());
+    }
+    function createArray(length) {
+        var arr = new Array(length || 0),
+            i = length;
+
+        if (arguments.length > 1) {
+            var args = Array.prototype.slice.call(arguments, 1);
+            while(i--) arr[length-1 - i] = createArray.apply(this, args);
+        }
+
+        return arr;
+    }
+    function displayInventory(table){
+        document.write("<TABLE>");
+        for(var x = 1; x < table.length; x++) {
+            for(var y = 0; y < table[x].length; y++){
+                document.write("<TD>",table[x][y],"</TD>");
+            }
+            document.write("</TR>");
+        }
+        document.write("</TABLE>");
+    }
+    width = Math.round(screen.availWidth/18)-1;
+    height = Math.round(screen.availHeight/28)-1;
+    scenario = createArray(height, width);
+    for(var i = 0; i < scenario.length; i++){
+        for(var j = 0; j < scenario[i].length; j++){
+            if(randomize_binary() == 0) {
+                scenario[i][j] = '&#9744;';
+            } else {
+                scenario[i][j] = '&#9746;';
+            }
+        }
+    }
+    displayInventory(scenario);
+</script>
+<table id="scenario">
+</table>
+</body>
+</html>
